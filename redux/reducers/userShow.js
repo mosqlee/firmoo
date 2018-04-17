@@ -8,7 +8,6 @@ const initState = {
 }
 
 export default function reducer(state = initState, action) {
-    console.log(state, action.type)
     switch (action.type) {
 
         case GET_USER_LIST_REQUEST:
@@ -20,7 +19,6 @@ export default function reducer(state = initState, action) {
             }
             break;
         case GET_USER_LIST_SUCCESS:
-            console.log(action.result.data.data.list)
             return {
                 ...state,
                 isLoading: false,
@@ -28,7 +26,6 @@ export default function reducer(state = initState, action) {
                 userList: { userList: action.result.data.data.list },
                 errorMsg: ''
             }
-            console.log(state)
             break;
         case GET_USER_LIST_FAIL:
             return {

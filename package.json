@@ -6,16 +6,31 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
   },
+  "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^22.4.3",
+    "react-test-renderer": "^16.3.2",
+    "react-addons-test-utils": "^15.6.2"
+  },
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
-    "koa": "^2.0.1",
-    "koa-router": "^7.1.0",
+    "express": "4.16.2",
+    "i18next": "^11.2.2",
+    "i18next-browser-languagedetector": "^2.2.0",
+    "i18next-express-middleware": "1.0.10",
+    "i18next-node-fs-backend": "^1.0.0",
+    "i18next-xhr-backend": "^1.5.1",
+    "jquery": "^3.3.1",
     "next": "latest",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-i18next": "7.3.6",
+    "react-redux": "^5.0.7",
     "reactstrap": "^5.0.0",
     "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0"
   }
 }

@@ -1,39 +1,49 @@
-const Koa = require('koa')
+const express = require('express')
+const path = require('path')
 const next = require('next')
-const Router = require('koa-router')
 
-const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-app.prepare()
-.then(() => {
-  const server = new Koa()
-  const router = new Router()
+const i18nextMiddleware = require('i18next-express-middleware')
+const Backend = require('i18next-node-fs-backend')
+const { i18nInstance } = require('./i18n')
 
-  router.get('/a', async ctx => {
-    await app.render(ctx.req, ctx.res, '/b', ctx.query)
-    ctx.respond = false
-  })
+// init i18next with serverside settings
+// using i18next-express-middleware
+i18nInstance
+  .use(Backend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init({
+    fallbackLng: 'en',
+    preload: ['en', 'de','zh'], // preload all langages
+    ns: ['common', 'home', 'page2'], // need to preload all the namespaces
+    backend: {
+      loadPath: path.join(__dirname, '/locales/{{lng}}/{{ns}}.json'),
+      addPath: path.join(__dirname, '/locales/{{lng}}/{{ns}}.missing.json')
+    }
+  }, () => {
+    // loaded translations we can bootstrap our routes
+    app.prepare()
+      .then(() => {
+        const server = express()
 
-  router.get('/b', async ctx => {
-    await app.render(ctx.req, ctx.res, '/a', ctx.query)
-    ctx.respond = false
-  })
+        // enable middleware for i18next
+        server.use(i18nextMiddleware.handle(i18nInstance))
 
-  router.get('*', async ctx => {
-    await handle(ctx.req, ctx.res)
-    ctx.respond = false
-  })
+        // serve locales for client
+        server.use('/locales', express.static(path.join(__dirname, '/locales')))
 
-  server.use(async (ctx, next) => {
-    ctx.res.statusCode = 200
-    await next()
-  })
+        // missing keys
+        server.post('/locales/add/:lng/:ns', i18nextMiddleware.missingKeyHandler(i18nInstance))
 
-  server.use(router.routes())
-  server.listen(port, () => {
-    console.log(`> Ready on http://localhost:${port}`)
+        // use next.js
+        server.get('*', (req, res) => handle(req, res))
+
+        server.listen(3000, (err) => {
+          if (err) throw err
+          console.log('> Ready on http://localhost:3000')
+        })
+      })
   })
-})

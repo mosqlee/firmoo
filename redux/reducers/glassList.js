@@ -19,14 +19,12 @@ export default function reducer(state = initState, action) {
             }
             break;
         case GET_GLASS_LIST_SUCCESS:
-            console.log(action.result.data.data.list)
             return {
                 ...state,
                 isLoading: false,
                 glassList: { glassList: action.result.data.data.list },
                 errorMsg: ''
             }
-            console.log(state)
             break;
         case GET_GLASS_LIST_FAIL:
             return {

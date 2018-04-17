@@ -17,14 +17,12 @@ export default function reducer(state = initState, action) {
             }
             break;
         case GET_SWIPER_INFO_SUCCESS:
-            console.log(action.result.data.data)
             return {
                 ...state,
                 isLoading: false,
                 swiperInfo: {swiperInfo: action.result.data.data},
                 errorMsg: ''
             }
-            console.log(state)
             break;
         case GET_SWIPER_INFO_FAIL:
             return {

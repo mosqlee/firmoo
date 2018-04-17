@@ -2,7 +2,6 @@ import axios from 'axios';
 
 export default store => next => action => {
     const { dispatch, getState } = store;
-    console.log(action,3333);
     /*如果dispatch来的是一个function，此处不做处理，直接进入下一级*/
     if (typeof action === 'function') {
         action(dispatch, getState);
@@ -15,7 +14,6 @@ export default store => next => action => {
         afterSuccess,
         ...rest
     } = action;
-    console.log(types);
     /*没有promise，证明不是想要发送ajax请求的，就直接进入下一步啦！*/
     if (!action.promise) {
         return next(action);

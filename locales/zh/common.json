@@ -1,0 +1,6 @@
+{
+  "integrates_react-i18next": "这个例子使用react-next",
+  "pureComponent": "你也可以传递t函数给子组件",
+  "extendedComponent": "或者用react-i18next提供的hoc包裹组件",
+  "transComponent": "额外的，你也可以选择Trans组件"
+}
