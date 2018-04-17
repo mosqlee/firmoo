@@ -1,0 +1,21 @@
+{
+  "name": "custom-server-koa",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.0.0",
+    "koa": "^2.0.1",
+    "koa-router": "^7.1.0",
+    "next": "latest",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "reactstrap": "^5.0.0",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
+  }
+}
