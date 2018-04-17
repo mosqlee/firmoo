@@ -10,9 +10,22 @@ import { bindActionCreators } from 'redux'
 import { getSwiperInfo } from "../redux/actions/swiperInfo"
 import { getGlassList } from '../redux/actions/glassList'
 import { getUserList } from '../redux/actions/userShow'
+import Swiper from './../components/swiper';
 // component
-import PureComponent from '../components/PureComponent'
+/**
+ * 首页
+ * 
+ * @class Index
+ * @extends {Component}
+ */
 class Index extends Component {
+  static async getInitialProps({ store, req, res, isServer }){
+    if (isServer) {
+      const { slugDoctor } = req.query
+      await store.dispatch(getSwiperInfo())
+    }
+    return {isServer}
+  }
   constructor(props){
     super(props)
     this.t = this.props.t;
@@ -21,11 +34,7 @@ class Index extends Component {
     //en-US,zh-CN
   }
   componentDidMount() {
-    console.log(this.props.getSwiperInfo);
-    this.props.getSwiperInfo();
-    setTimeout(() => {
-      console.log(this.props.initStore);
-    }, 3000);
+    // this.props.getSwiperInfo();
 
     // this.timer = this.props.startClock()
   }
@@ -36,8 +45,8 @@ class Index extends Component {
           <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"></link>
         </Head>
         <h1>{this.t('welcome')}</h1>
-        <PureComponent t={this.t} />
         <p>{this.t('common:integrates_react-i18next')}</p>
+        <Swiper/>
         <ul>
           <li><Link href='/b' as='/a'><a>a</a></Link></li>
           <li><Link href='/a' as='/b'><a>b</a></Link></li>
