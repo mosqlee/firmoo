@@ -4,15 +4,16 @@
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
+    "test": "cross-env NODE_ENV=test jest",
     "start": "NODE_ENV=production node server.js"
   },
   "devDependencies": {
-    "enzyme": "^3.3.0",
     "cross-env": "^5.1.4",
+    "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^22.4.3",
-    "react-test-renderer": "^16.3.2",
-    "react-addons-test-utils": "^15.6.2"
+    "react-addons-test-utils": "^15.4.2",
+    "react-test-renderer": "^16.3.2"
   },
   "dependencies": {
     "axios": "^0.18.0",
