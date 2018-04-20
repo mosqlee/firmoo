@@ -10,7 +10,9 @@ import { bindActionCreators } from 'redux'
 import { getSwiperInfo } from "../redux/actions/swiperInfo"
 import { getGlassList } from '../redux/actions/glassList'
 import { getUserList } from '../redux/actions/userShow'
+// components
 import Swiper from './../components/swiper';
+import PureComponent from '../components/PureComponent'
 import axios from 'axios'
 // component
 /**
@@ -40,6 +42,9 @@ class App extends Component {
         //en-US,zh-CN
     }
     componentDidMount() {
+        axios.get('test').then((res)=>{
+            console.log(res)
+        });
         // this.props.getSwiperInfo();
         // this.timer = this.props.startClock()
     }
@@ -59,6 +64,7 @@ class App extends Component {
                 <div>
                     <Button color="primary">primary</Button>
                 </div>
+                <PureComponent t={this.t}/>
             </div>
         )
     }
