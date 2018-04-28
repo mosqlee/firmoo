@@ -1,8 +1,11 @@
+import 'core-js/fn/string/includes'
 import React, { Component }  from 'react'
 import Link from 'next/link'
+import Router from 'next/router'
 import { Button } from 'reactstrap';
 import Head from 'next/head'
 import { withI18next } from '../lib/withI18next'
+import * as $ from 'jquery'
 // redux
 import { initStore, startClock, addCount, serverRenderClock, getInfo } from '../store'
 import withRedux from '../utils/withRedux'
@@ -23,32 +26,40 @@ import axios from 'axios'
  */
 class App extends Component {
     static async getInitialProps({ store, req, res, isServer },lang){
-        let json;
+        let json,lan;
         // 获取需要渲染的语言
-        const lan = lang.initialLanguage;
-        console.log(lan,'props'.repeat(100))
-        if (isServer) {
+        if(isServer){
+            lan = lang.initialLanguage;
+        }
+        // 发起语言特性的特殊请求
         json =await axios('http://localhost:3000/static/mock.json')
         return { isServer, json:json.data }
-        }
-        return { isServer, json}
     }
     constructor(props){
         super(props)
         this.t = this.props.t;
         // 根据这个变量来确认请求不同语言的接口
         this.lang = this.props;
-        console.log(this.props,'lang'.repeat(100))
+        // console.log(this.props,'lang'.repeat(100))
         //en-US,zh-CN
     }
     componentDidMount() {
         axios.get('test').then((res)=>{
             console.log(res)
         });
+        const a = {a:1};
+        const b = {b:2};
+        console.log(Object.assign(a,b));
+        console.log('firmoo'.includes('fir'))
         // this.props.getSwiperInfo();
         // this.timer = this.props.startClock()
     }
     render(){
+        function test(){
+            // const a = { a: 1 };
+            // const b = { b: 2 };
+            // console.log(Object.assign(a, b));
+        }
         return (
             <div>
                 <Head>
@@ -56,13 +67,14 @@ class App extends Component {
                 </Head>
                 <h1>{this.t('welcome')}</h1>
                 <p>{this.t('common:integrates_react-i18next')}</p>
-                <Swiper swiperInfo={this.props.json.data}/>
+                <span>{this.props.json.data}</span>
+                <Swiper swiperInfo={this.props.json ? this.props.json.data:[]}/>
                 <ul>
-                    <li><Link href='/b' as='/a'><a>a</a></Link></li>
+                    <li><a href="javascript:void(0)" onClick={() => Router.push('/b',{shallow:false})}>aa</a></li>
                     <li><Link href='/a' as='/b'><a>b</a></Link></li>
                 </ul>
                 <div>
-                    <Button color="primary">primary</Button>
+                    <Button color="primary" onClick={()=>test()}>primary</Button>
                 </div>
                 <PureComponent t={this.t}/>
             </div>
